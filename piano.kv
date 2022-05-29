@@ -1,0 +1,10 @@
+#:kivy 2.1.0
+
+<PianoWidget>:
+  canvas.before:
+    Color:
+      rgba: self.rgba
+    Rectangle:
+      pos: self.pos
+      size: self.size
+      
