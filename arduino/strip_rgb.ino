@@ -21,20 +21,9 @@ void setup() {
   pinMode(BLUE_LED, OUTPUT);
   pinMode(BUTTON_PIN, INPUT_PULLUP);
   rgbColor(red, green, blue);
-  // pinMode(red_light_pin, OUTPUT);
-  // pinMode(green_light_pin, OUTPUT);
-  // pinMode(blue_light_pin, OUTPUT);
 }
 
 void loop() {
-  //int buttonState = digitalRead(BUTTON_PIN);
-  // if (buttonState == LOW && !pressed) {
-  //   // start recording
-  //   pressed = true;
-  //   Serial.println("b");
-  // } else if (pressed && buttonState == HIGH) {
-  //   pressed = false;
-  // }
   if (dataComplete) {
     processInput(inputData);
     rgbColor(red, green, blue);
@@ -48,12 +37,6 @@ void rgbColor(int red_light_value, int green_light_value, int blue_light_value) 
   analogWrite(GREEN_LED, green_light_value);
   analogWrite(BLUE_LED, blue_light_value);
 }
-// void rgbColor(int red_light_value, int green_light_value, int blue_light_value)
-// {
-//   analogWrite(red_light_pin, red_light_value);
-//   analogWrite(green_light_pin, green_light_value);
-//   analogWrite(blue_light_pin, blue_light_value);
-// }
 
 void processInput(String data) {
   char pCh[11];
@@ -88,22 +71,5 @@ void serialEvent() {
     }
     inputData += ch;
 
-    // if (ch == -1) {
-    //   return;
-    // }
-    // Serial.write(ch);
-    // Serial.print(ch);
-    // char *pCh = (char *) malloc(sizeof(ch));
-    // *pCh = ch;
-
-    // char *pCh = "20,30,40";
-    
-    // 
-
-
-    // Serial.print(rgb[0]);
-    // Serial.print(rgb[1]);
-    // Serial.print(rgb[2]);
-    
   }
 }
