@@ -1,5 +1,4 @@
 import io
-from tabnanny import check
 import time
 import rtmidi
 import serial
