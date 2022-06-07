@@ -18,7 +18,6 @@ void setup() {
   pinMode(GREEN_LED, OUTPUT);
   pinMode(RED_LED, OUTPUT);
   pinMode(BLUE_LED, OUTPUT);
-  pinMode(BUTTON_PIN, INPUT_PULLUP);
   rgbColor(red, green, blue);
 }
 
