@@ -7,8 +7,6 @@ from colour import Color
 
 midi_in = rtmidi.MidiIn()
 midiout = rtmidi.MidiOut()
-# print(midi_in.get_ports())
-# print(midiout.get_ports())
 ser = serial.Serial('COM3', 9600)
 sio = io.TextIOWrapper(io.BufferedRWPair(ser, ser))
 time.sleep(1)  # wait for arduino to initialize
