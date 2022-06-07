@@ -2,7 +2,6 @@
 #define RED_LED 6
 #define BLUE_LED 5
 #define GREEN_LED 9
-#define BUTTON_PIN 2
 
 String inputData = "";
 bool dataComplete = false;
