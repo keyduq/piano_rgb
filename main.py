@@ -4,6 +4,8 @@ import rtmidi
 import serial
 from colour import Color
 
+from mode_type import ModeType
+
 midi_in = rtmidi.MidiIn()
 midiout = rtmidi.MidiOut()
 ser = serial.Serial('COM3', 9600)
@@ -11,6 +13,8 @@ sio = io.TextIOWrapper(io.BufferedRWPair(ser, ser))
 time.sleep(1)  # wait for arduino to initialize
 last_color = None
 black = Color("black")
+mode = ModeType.COLOR_RANGE
+hue_start = 190
 
 
 def main():
@@ -50,9 +54,9 @@ def connect():
 def send_color(color):
   global last_color
   last_color = color
-  data = str(int(color.red * 255)) + ',' + str(int(color.green * 255)
-                                               ) + ',' + str(int(color.blue * 255)) + "\n"
-  sio.write(data)
+  data = f'{str(int(color.red * 255))},{str(int(color.green * 255))},{str(int(color.blue * 255))}\n'
+  output = sio.write(data)
+  print(output)
   sio.flush()
 
 
@@ -66,8 +70,13 @@ def replicate_midi(data, _):
   midiout.send_message(msg)
   if (msg[0] == 144):  # 144: key down, 128: key up
     key = msg[1] - 20
-    hue = key / 88
-    color = Color(hue=hue, saturation=1, luminance=msg[2]/254)
+    if mode == ModeType.SPECTRUM:
+      hue = key / 88
+    elif mode == ModeType.COLOR_RANGE:
+      hue = (hue_start + key / 2) / 360
+    else:
+      hue = key / 88
+    color = Color(hue=hue, saturation=1, luminance=(20 + msg[2])/200)
     send_color(color)
 
 

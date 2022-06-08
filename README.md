@@ -11,7 +11,7 @@ Script that reads the Piano MIDI and light the LED RGB Strip according to the no
 
 To install the dependencies you need to run:
 ```
-pip install python-rtmidi pyserial colour
+pip install -r requeriments.txt
 ```
 
 ## Arduino
