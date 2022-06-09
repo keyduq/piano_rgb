@@ -3,6 +3,7 @@ import time
 import rtmidi
 import serial
 from colour import Color
+from datetime import datetime
 
 from mode_type import ModeType
 
@@ -13,8 +14,8 @@ sio = io.TextIOWrapper(io.BufferedRWPair(ser, ser))
 time.sleep(1)  # wait for arduino to initialize
 last_color = None
 black = Color("black")
-mode = ModeType.COLOR_RANGE
-hue_start = 190
+mode = ModeType.SPECTRUM
+hue_start = 80
 
 
 def main():
@@ -53,10 +54,10 @@ def connect():
 
 def send_color(color):
   global last_color
-  last_color = color
-  data = f'{str(int(color.red * 255))},{str(int(color.green * 255))},{str(int(color.blue * 255))}\n'
-  output = sio.write(data)
-  print(output)
+  color_merged = color if last_color is None else merge_colors(last_color, color)
+  last_color = color_merged
+  data = f'{str(int(color_merged.red * 255))},{str(int(color_merged.green * 255))},{str(int(color_merged.blue * 255))}\n'
+  sio.write(data)
   sio.flush()
 
 
@@ -76,7 +77,7 @@ def replicate_midi(data, _):
       hue = (hue_start + key / 2) / 360
     else:
       hue = key / 88
-    color = Color(hue=hue, saturation=1, luminance=(20 + msg[2])/200)
+    color = Color(hue=hue, saturation=1, luminance=(40 + msg[2])/254)
     send_color(color)
 
 
@@ -107,6 +108,12 @@ def get_output_port():
     return available_output_ports.index(casio_match[0])
   except:
     return None
+
+
+def merge_colors(first: Color, second: Color):
+  hue = (first.hue + second.hue) / 2
+  luminance = second.luminance
+  return Color(hue=hue, saturation=1, luminance=luminance)
 
 
 if __name__ == '__main__':
