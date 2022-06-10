@@ -14,7 +14,7 @@ sio = io.TextIOWrapper(io.BufferedRWPair(ser, ser))
 time.sleep(1)  # wait for arduino to initialize
 last_color = None
 black = Color("black")
-mode = ModeType.SPECTRUM
+mode = ModeType.COLOR_RANGE
 hue_start = 80
 
 
