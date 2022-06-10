@@ -16,7 +16,7 @@ pip install -r requeriments.txt
 
 ## Arduino
 
-You need an arduino as the controller for the lights, the sketch in the folder arduino is the one needed to upload to your arduino
+You need an arduino as the controller for the lights, the sketch is in the folder arduino is the one needed to upload to your arduino
 
 You will also need 3 MOSFETs transistors in order to control the lights since the LED RGB Strip I used were the 12v ones and the arduino only use 5v, 3 10k ohm resistors and a 12v power supply (usually it comes already with the LED Strip).
 
